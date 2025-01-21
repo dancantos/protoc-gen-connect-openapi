@@ -1,6 +1,7 @@
 package googleapi
 
 import (
+	"fmt"
 	"log/slog"
 	"net/http"
 	"strings"
@@ -239,22 +240,69 @@ func partsToParameter(tokens []Token) []string {
 
 func partsToOpenAPIPath(tokens []Token) string {
 	var b strings.Builder
-	for _, token := range tokens {
+	pos := 0
+	for pos < len(tokens) {
+		token := tokens[pos]
 		switch token.Type {
 		case TokenSlash:
 			b.WriteByte('/')
-		case TokenEOF:
+			pos++
 		case TokenColon:
 			b.WriteByte(':')
+			pos++
 		case TokenLiteral:
 			b.WriteString(token.Value)
+			pos++
 		case TokenIdent:
 			b.WriteString(token.Value)
+			pos++
 		case TokenVariable:
-			b.WriteByte('{')
-			b.WriteString(token.Value)
-			b.WriteByte('}')
+			segments, increment := variableToOpenAPIPath(tokens[pos:])
+			b.WriteString(segments)
+			pos += increment
+		default:
+			pos++
 		}
 	}
 	return b.String()
+}
+
+func variableToOpenAPIPath(tokens []Token) (string, int) {
+	var b strings.Builder
+	var variableName string
+	counter := 0
+	onPattern := false
+	increment := 0
+	for i, token := range tokens {
+		if token.Type == TokenVariableEnd {
+			increment = i
+			break
+		}
+		if token.Type == TokenEqual {
+			onPattern = true
+			b = strings.Builder{}
+		}
+		if !onPattern && token.Type == TokenVariable {
+			variableName = token.Value
+			b.WriteByte('{')
+			b.WriteString(token.Value)
+			b.WriteByte('}')
+			continue
+		}
+
+		switch token.Type {
+		case TokenSlash:
+			b.WriteByte('/')
+		case TokenColon:
+			b.WriteByte(':')
+		case TokenIdent:
+			b.WriteString(token.Value)
+		case TokenLiteral:
+			b.WriteByte('{')
+			fmt.Fprintf(&b, "%s_%d", variableName, counter)
+			b.WriteByte('}')
+			counter++
+		}
+	}
+	return b.String(), increment
 }

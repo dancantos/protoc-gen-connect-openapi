@@ -35,6 +35,8 @@ type Options struct {
 	WithProtoAnnotations bool
 	// Services filters which services will be used for generating OpenAPI spec.
 	Services []protoreflect.FullName
+	// IncludeGoogleAPIPaths tells connect-openapi to include googleapi path annotations.
+	IncludeGoogleAPIPaths bool
 
 	MessageAnnotator        annotations.MessageAnnotator
 	FieldAnnotator          annotations.FieldAnnotator
@@ -59,6 +61,7 @@ func NewOptions() Options {
 		ContentTypes: map[string]struct{}{
 			"json": {},
 		},
+		IncludeGoogleAPIPaths: true,
 	}
 }
 
@@ -126,6 +129,11 @@ func FromString(s string) (Options, error) {
 			services := strings.Split(param[9:], ",")
 			for _, service := range services {
 				opts.Services = append(opts.Services, protoreflect.FullName(service))
+			}
+		case strings.HasPrefix(param, "include-googleapi="):
+			boolean := strings.ToLower(param[18:])
+			if boolean == "false" { // opt out
+				opts.IncludeGoogleAPIPaths = false
 			}
 		default:
 			return opts, fmt.Errorf("invalid parameter: %s", param)

@@ -67,7 +67,25 @@ func TestRunPathPatternLexer(t *testing.T) {
 			{Type: "SLASH", Value: "/"},
 			{Type: "IDENT", Value: "pet"},
 			{Type: "SLASH", Value: "/"},
+			{Type: "VARIABLESTART", Value: "{"},
 			{Type: "VARIABLE", Value: "pet_id"},
+			{Type: "VARIABLEEND", Value: "}"},
+			{Type: "EOF"},
+		}, v)
+	})
+
+	t.Run("with-named-variable-pattern", func(t *testing.T) {
+		v, err := googleapi.RunPathPatternLexer("/{pet_id=pet/*}")
+		require.NoError(t, err)
+		assert.Equal(t, []googleapi.Token{
+			{Type: "SLASH", Value: "/"},
+			{Type: "VARIABLESTART", Value: "{"},
+			{Type: "VARIABLE", Value: "pet_id"},
+			{Type: "EQUAL", Value: "="},
+			{Type: "IDENT", Value: "pet"},
+			{Type: "SLASH", Value: "/"},
+			{Type: "LITERAL", Value: "*"},
+			{Type: "VARIABLEEND", Value: "}"},
 			{Type: "EOF"},
 		}, v)
 	})
@@ -79,7 +97,9 @@ func TestRunPathPatternLexer(t *testing.T) {
 			{Type: "SLASH", Value: "/"},
 			{Type: "IDENT", Value: "pet"},
 			{Type: "SLASH", Value: "/"},
+			{Type: "VARIABLESTART", Value: "{"},
 			{Type: "VARIABLE", Value: "pet_id"},
+			{Type: "VARIABLEEND", Value: "}"},
 			{Type: "COLON", Value: ":"},
 			{Type: "IDENT", Value: "addPet"},
 			{Type: "EOF"},
@@ -95,9 +115,13 @@ func TestRunPathPatternLexer(t *testing.T) {
 			{Type: "SLASH", Value: "/"},
 			{Type: "IDENT", Value: "messages"},
 			{Type: "SLASH", Value: "/"},
+			{Type: "VARIABLESTART", Value: "{"},
 			{Type: "VARIABLE", Value: "message_id"},
+			{Type: "VARIABLEEND", Value: "}"},
 			{Type: "SLASH", Value: "/"},
+			{Type: "VARIABLESTART", Value: "{"},
 			{Type: "VARIABLE", Value: "sub.subfield"},
+			{Type: "VARIABLEEND", Value: "}"},
 			{Type: "EOF"},
 		}, v)
 	})

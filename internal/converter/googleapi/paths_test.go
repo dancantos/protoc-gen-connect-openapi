@@ -14,4 +14,11 @@ func TestPartsToOpenAPIPath(t *testing.T) {
 		path := partsToOpenAPIPath(v)
 		assert.Equal(t, "/pet/{pet_id}:addPet", path)
 	})
+
+	t.Run("with named variable pattern", func(t *testing.T) {
+		v, err := RunPathPatternLexer("/{pet_id=pet/*}:addPet")
+		require.NoError(t, err)
+		path := partsToOpenAPIPath(v)
+		assert.Equal(t, "/pet/{pet_id_0}:addPet", path)
+	})
 }
