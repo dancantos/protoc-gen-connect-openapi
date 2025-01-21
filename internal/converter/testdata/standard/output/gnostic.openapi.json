@@ -5,12 +5,12 @@
     "description": "Description from annotation",
     "contact": {
       "name": "Contact Name",
-      "url": "https://github.com/sudorandom/protoc-gen-connect-openapi",
+      "url": "https://github.com/dancantos/protoc-gen-connect-openapi",
       "email": "hello@sudorandom.com"
     },
     "license": {
       "name": "MIT License",
-      "url": "https://github.com/sudorandom/protoc-gen-connect-openapi/blob/master/LICENSE"
+      "url": "https://github.com/dancantos/protoc-gen-connect-openapi/blob/master/LICENSE"
     },
     "version": "Version from annotation"
   },

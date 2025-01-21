@@ -35,14 +35,14 @@ func addPathItemsFromFile(opts options.Options, fd protoreflect.FileDescriptor, 
 				}
 			}
 
+			// Always include ConnectRPC/gRPC path
+			path := "/" + string(service.FullName()) + "/" + string(method.Name())
+			addPathItem(path, methodToPathItem(opts, method))
+
 			// Update path items from google.api annotations
 			for pair := pathItems.First(); opts.IncludeGoogleAPIPaths && pair != nil; pair = pair.Next() {
 				addPathItem(pair.Key(), pair.Value())
 			}
-
-			// Always include ConnectRPC/gRPC path
-			path := "/" + string(service.FullName()) + "/" + string(method.Name())
-			addPathItem(path, methodToPathItem(opts, method))
 		}
 	}
 
