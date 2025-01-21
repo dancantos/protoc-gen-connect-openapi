@@ -10,8 +10,8 @@ import (
 	"google.golang.org/protobuf/proto"
 	pluginpb "google.golang.org/protobuf/types/pluginpb"
 
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter"
 	"github.com/lmittmann/tint"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter"
 )
 
 var (
@@ -60,6 +60,7 @@ func renderResponse(resp *pluginpb.CodeGeneratorResponse) {
 		return
 	}
 }
+
 func fullVersion() string {
 	return fmt.Sprintf("%s (%s) @ %s; %s", version, commit, date, runtime.Version())
 }

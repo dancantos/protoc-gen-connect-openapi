@@ -7,10 +7,10 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/descriptorpb"
 
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/gnostic"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/googleapi"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/options"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/util"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/gnostic"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/googleapi"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/options"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/util"
 )
 
 func addPathItemsFromFile(opts options.Options, fd protoreflect.FileDescriptor, paths *v3.Paths) error {
