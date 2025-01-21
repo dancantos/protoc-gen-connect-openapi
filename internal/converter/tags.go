@@ -5,7 +5,7 @@ import (
 	highbase "github.com/pb33f/libopenapi/datamodel/high/base"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/util"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/util"
 )
 
 func fileToTags(fd protoreflect.FileDescriptor) []*base.Tag {
