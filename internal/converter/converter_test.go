@@ -11,14 +11,14 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/options"
 	"github.com/pb33f/libopenapi"
 	validator "github.com/pb33f/libopenapi-validator"
 	"github.com/pb33f/libopenapi/datamodel"
 	"github.com/pseudomuto/protokit/utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/options"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 	pluginpb "google.golang.org/protobuf/types/pluginpb"
@@ -71,8 +71,8 @@ func generateAndCheckResult(t *testing.T, options, format, protofile string) str
 	_, statErr := os.Stat(outputPath)
 	switch {
 	case errors.Is(statErr, os.ErrNotExist):
-		assert.NoError(t, os.MkdirAll(filepath.Dir(outputPath), 0755))
-		assert.NoError(t, os.WriteFile(outputPath, []byte(file.GetContent()), 0644))
+		assert.NoError(t, os.MkdirAll(filepath.Dir(outputPath), 0o755))
+		assert.NoError(t, os.WriteFile(outputPath, []byte(file.GetContent()), 0o644))
 	case statErr != nil:
 		require.NoError(t, statErr)
 	default:

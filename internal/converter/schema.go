@@ -11,9 +11,9 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"gopkg.in/yaml.v3"
 
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/options"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/schema"
-	"github.com/sudorandom/protoc-gen-connect-openapi/internal/converter/util"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/options"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/schema"
+	"github.com/dancantos/protoc-gen-connect-openapi/internal/converter/util"
 )
 
 type State struct {
